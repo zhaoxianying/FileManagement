@@ -1,0 +1,43 @@
+{
+  "properties": [
+    {
+      "name": "mybatis.mapper-locations",
+      "type": "java.lang.String",
+      "description": "Description for mybatis.mapper-locations."
+    },
+    {
+      "name": "servlet.multipart.enabled",
+      "type": "java.lang.String",
+      "description": "Description for servlet.multipart.enabled."
+    },
+    {
+      "name": "spring.http.multipart.maxFileSize",
+      "type": "java.lang.String",
+      "description": "Description for spring.http.multipart.maxFileSize."
+    },
+    {
+      "name": "file.staticAccessPath",
+      "type": "java.lang.String",
+      "description": "Description for file.staticAccessPath."
+    },
+    {
+      "name": "file",
+      "type": "java.lang.String",
+      "description": "Description for file."
+    },
+    {
+      "name": "spring.mvc.favicon.enable",
+      "type": "java.lang.String",
+      "description": "Description for spring.mvc.favicon.enable."
+    },
+    {
+      "name": "spring.mvc.favicon.enable",
+      "type": "java.lang.String",
+      "description": "Description for spring.mvc.favicon.enable."
+    },
+    {
+      "name": "mailtask.qqMail",
+      "type": "java.lang.String",
+      "description": "Description for mailtask.qqMail."
+    }
+  ] }

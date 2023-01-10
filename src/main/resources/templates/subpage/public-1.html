@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ch"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>我的共享</title>
+    <link rel="stylesheet" th:href="@{/css/subpage.css}">
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all">
+</head>
+<bod class="layui-anim layui-anim-fadein">
+    <div id="curtain"></div>
+    <!--    顶部导航-->
+    <div class="eyebrows">
+        <div class="toptitle">全网搜</div>
+        <div class="topsearch" style="right: 0px">
+            <i id="layui-icon-search" class="layui-icon layui-icon-search"></i>
+            <i id="layui-icon-add-1" class="layui-icon layui-icon-add-1" style="display: none"></i>
+        </div>
+        <!--        搜索弹出框-->
+        <div id="search-win" class="search-win layui-anim layui-anim-scale">
+            <div class="search-frame">
+                <form th:action="@{/files/findallpersonpublic}" method="post">
+                    <input id="search-input" name="keys" oninput="oninput01(this)" type="text" placeholder="请输入关键字" class="search-input">
+                    <i id="layui-icon-close" class="layui-icon layui-icon-close"></i>
+                    <div class="search-line"></div>
+                    <ul id="tip-frame" class="layui-anim layui-anim-fadein" style="display: block">
+                        <li class="tip-list" onclick="onclick02(0)">
+                            <span><i class="layui-icon layui-icon-picture"></i></span>
+                            <span>图片</span>
+                        </li>
+                        <li class="tip-list" onclick="onclick02(1)">
+                            <span><i class="layui-icon layui-icon-video"></i></span>
+                            <span>视频</span>
+                        </li>
+                        <li class="tip-list" onclick="onclick02(2)">
+                            <span><i class="layui-icon layui-icon-headset"></i></span>
+                            <span>音频</span>
+                        </li>
+                        <li class="tip-list" onclick="onclick02(3)">
+                            <span><i class="layui-icon layui-icon-export"></i></span>
+                            <span>压缩文件</span>
+                        </li>
+                        <li class="tip-list" onclick="onclick02(4)">
+                            <span><i class="layui-icon layui-icon-form"></i></span>
+                            <span>文档</span>
+                        </li>
+                    </ul>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <!--    分享弹出框-->
+    <div id="sharefiles" class="layui-anim layui-anim-scale">
+        <div class="title003">
+            <span>分享文件</span>
+            <i id="layui-icon-close03" class="layui-icon layui-icon-close"></i>
+        </div>
+        <div class="picture02">
+            <img id="avatar2" th:src="@{/img/maxfolder.png}" height="140" width="140"/>
+            <p id="filename2"></p>
+        </div>
+        <div class="linkinfo">
+            <p>通过链接分享<span>默认永久有效</span></p>
+            <div class="copylink">
+                <p id="linkid">https:www.baidu.com</p>
+                <input id="hidetext" type="text">
+                <p id="hidetext1" style="display: none"></p>
+                <a onclick="copylink()" lay-active="e1">复制链接口令</a>
+            </div>
+            <nav>二维码分享待开发</nav>
+        </div>
+    </div>
+
+    <!--    顶部提示-->
+    <div class="infoshow">
+        <div class="showcount">
+            <input id="allchoose" onclick="allchoose()" type="checkbox" name="" value="" title="写作">
+            <span>全</span>
+            <span>选</span>
+        </div>
+    </div>
+    <!--    底部弹出导航-->
+    <div id="downlist" class="downlist layui-anim layui-anim-up" style="width: 100px">
+        <div>
+            <a id="downloadall" style="margin-left: 0px"><i class="layui-icon layui-icon-download-circle"></i></a>
+            <a onclick="closeallchoose()" href="#"><i class="layui-icon layui-icon-close-fill"></i></a>
+        </div>
+    </div>
+    <!--    ============================================-->
+    <div id="nonullshow" style="display: block" class="nonullshow" th:style="'display:'+(${files.size()} != 0 ? 'block' : 'none')">
+        <div th:each="file:${files}" class="files layui-anim layui-anim-fadein">
+            <div class="rightsub-list layui-anim layui-anim-scale" style="display: none;height: 83px">
+                <ul>
+                    <li style="margin-top: 3px"><a th:href='@{${"/files/downloadfile?fileid="+file.getId()}}'>下载</a></li>
+                    <li th:onclick='sharefile([[${file.getIcon()}]],[[${file.getOldfilename()}]],[[${file.getId()}]])'><a>分享</a></li>
+                </ul>
+            </div>
+            <i class="leftsub" style="display: none">
+                <input class="chooseone" onclick="chooseone()" type="checkbox">
+                <input type="text" style="display: none" th:value="${file.getId()}">
+                <input class="publicstatis" type="text" style="display: none" th:value="${file.getIspublic()}">
+            </i>
+            <i class="rightsub layui-icon layui-icon-more" style="display: none"></i>
+
+            <img th:src='@{${"/icon/"+file.getIcon()+".png"}}' height="90" width="90"/>
+            <p th:text="${file.getOldfilename()}"></p>
+            <span class="datatip" th:text="${file.getChangetime()}"></span>
+        </div>
+    </div>
+
+    <!--    =================================================-->
+    <div class="nullshow" th:style="'display:'+(${files.size()} != 0 ? 'none' : 'block')">
+        <ul>
+            <li id="add-folder01" style="opacity: 0">
+                <div>上传文件</div>
+                <p><img th:src="@{/img/createfolder.png}" height="72" width="72"/></p>
+            </li>
+            <li style="margin-left: 28px;">
+                <div>空空如也</div>
+                <p><img th:src="@{/img/uploadfile.png}" height="72" width="72"/></p>
+            </li>
+            <li style="margin-left: 28px;opacity: 0">
+                <div>欢迎使用</div>
+                <p><img th:src="@{/img/uploadfolder.png}" height="72" width="72"/></p>
+            </li>
+        </ul>
+    </div>
+    <script th:src="@{/js/jquery-3.6.0.js}"></script>
+    <script th:src="@{/js/public-1.js}"></script>
+    <script th:src="@{/layui/layui.js}"></script>
+</bod>
+</html>

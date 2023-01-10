@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>登录注册</title>
+    <link rel="stylesheet" th:href="@{/css/loginandreg.css}">
+    <style>
+        #statuscode{
+            color: #4B5FE6;
+            font-weight: 1000;
+            padding-top: 180px;
+            font-size: 200px;
+        }
+        #returntip{
+            color: #4B5FE6;
+            font-weight: 800;
+        }
+    </style>
+</head>
+<body>
+    <div class="showlogo">
+        <img th:src="@{/img/face.png}" height="547.2" width="868.8"/>
+    </div>
+    <div class="loginform">
+        <div>
+            <p id="statuscode">404</p>
+            <a id="returntip" th:href="@{/loginandreg.html}">>>>返回重新登录</a>
+        </div>
+    </div>
+</body>
+</html>
